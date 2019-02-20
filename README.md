@@ -19,7 +19,26 @@ $ yarn add @slimio/TimeMap
 ```
 
 ## Usage example
-TBC
+```js
+const { strictEqual } = require("assert");
+const TimeMap = require("@slimio/timemap");
+
+const col = new TimeMap(1000);
+col.set("foo", "bar");
+col.set("test", true);
+strictEqual(col.has("foo"), true);
+
+setTimeOut(() => {
+    col.set("hello", "world!");
+    strictEqual(col.has("foo"), true);
+});
+
+setTimeOut(() => {
+    strictEqual(col.has("foo"), false);
+    strictEqual(col.has("test"), false);
+    strictEqual(col.has("hello"), true);
+}, 1100);
+```
 
 ## API
 TBC
