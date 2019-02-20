@@ -19,7 +19,7 @@ const TimeStore = new WeakMap();
 // Symbols
 const SymInterval = Symbol("interval");
 const SymCurrKey = Symbol("currentKey");
-const SymTimeLife = Symbol("timeLife");
+const SymTime = Symbol("timelife");
 
 /**
  * @func checkInterval
@@ -84,7 +84,7 @@ class TimeMap extends events {
         TimeStore.set(this, new Map());
         privateProperty(this, SymInterval, null);
         privateProperty(this, SymCurrKey, null);
-        privateProperty(this, SymTimeLife, this.timeLifeMs);
+        privateProperty(this, SymTime, timeLifeMs);
     }
 
     /**
@@ -92,7 +92,7 @@ class TimeMap extends events {
      * @memberof TimeMap#
      */
     get timeLife() {
-        return this[SymTimeLife];
+        return this[SymTime];
     }
 
     /**
