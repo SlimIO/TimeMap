@@ -1,9 +1,6 @@
 // Require Node.js Dependencies
 const events = require("events");
 
-// Require Third-party Dependencies
-const { privateProperty } = require("@slimio/utils");
-
 /**
  * @typedef {Object} TimeValue
  * @property {any} value
@@ -82,9 +79,15 @@ class TimeMap extends events {
         }
 
         TimeStore.set(this, new Map());
-        privateProperty(this, SymInterval, null);
-        privateProperty(this, SymCurrKey, null);
-        privateProperty(this, SymTime, timeLifeMs);
+        Reflect.defineProperty(this, SymInterval, {
+            writable: true,
+            value: null
+        });
+        Reflect.defineProperty(this, SymCurrKey, {
+            writable: true,
+            value: null
+        });
+        Reflect.defineProperty(this, SymTime, { value: timeLifeMs });
     }
 
     /**
