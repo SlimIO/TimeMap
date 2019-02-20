@@ -21,7 +21,9 @@
         "url": "https://github.com/SlimIO/TimeMap/issues"
     },
     "homepage": "https://github.com/SlimIO/TimeMap#readme",
-    "dependencies": {},
+    "dependencies": {
+        "@slimio/utils": "^0.8.0"
+    },
     "devDependencies": {
         "@commitlint/cli": "^7.5.2",
         "@commitlint/config-conventional": "^7.5.0",
