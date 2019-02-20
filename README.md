@@ -32,12 +32,12 @@ col.set("foo", "bar");
 col.set("test", true);
 strictEqual(col.has("foo"), true);
 
-setTimeOut(() => {
+setTimeout(() => {
     col.set("hello", "world!");
     strictEqual(col.has("foo"), true);
-});
+}, 500);
 
-setTimeOut(() => {
+setTimeout(() => {
     strictEqual(col.has("foo"), false);
     strictEqual(col.has("test"), false);
     strictEqual(col.has("hello"), true);
