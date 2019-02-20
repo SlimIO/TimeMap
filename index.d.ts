@@ -11,6 +11,7 @@ declare class TimeMap extends events {
     delete(key: TimeMap.key): void;
     set(key: TimeMap.key, value: any): void;
     get<T>(key: TimeMap.key): T | null;
+    clear(): void;
 }
 
 declare namespace TimeMap {

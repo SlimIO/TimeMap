@@ -172,6 +172,20 @@ class TimeMap extends events {
 
         return self.has(key) ? self.get(key).value : null;
     }
+
+    /**
+     * @method clear
+     * @memberof TimeMap#
+     * @returns {void}
+     */
+    clear() {
+        if (this[SymInterval] !== null) {
+            clearTimeout(this[SymInterval]);
+        }
+
+        this[SymCurrKey] = null;
+        TimeStore.set(this, new Map());
+    }
 }
 
 module.exports = TimeMap;
