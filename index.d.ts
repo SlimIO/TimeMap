@@ -1,6 +1,8 @@
 declare class TimeMap {
     constructor(timeLifeMs: number);
 
+    public readonly timeLife: number;
+
     has(key: TimeMap.key): boolean;
     delete(key: TimeMap.key): void;
     set(key: TimeMap.key, value: any): void;
