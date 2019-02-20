@@ -1,4 +1,8 @@
-declare class TimeMap {
+/// <reference types="@types/node" />
+
+import * as events from "events";
+
+declare class TimeMap extends events {
     constructor(timeLifeMs: number);
 
     public readonly timeLife: number;

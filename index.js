@@ -1,3 +1,6 @@
+// Require Node.js Dependencies
+const events = require("events");
+
 // Require Third-party Dependencies
 const { privateProperty } = require("@slimio/utils");
 
@@ -42,6 +45,7 @@ function checkInterval(timeMap) {
         const deltaTime = Date.now() - elem.ts;
 
         if (deltaTime >= timeMap.timeLife) {
+            timeMap.emit("expiration", key, self.get(key));
             self.delete(key);
         }
         else {
@@ -49,6 +53,7 @@ function checkInterval(timeMap) {
 
             timeMap[SymCurrKey] = key;
             timeMap[SymInterval] = setTimeout(() => {
+                timeMap.emit("expiration", key, self.get(key));
                 self.delete(key);
                 checkInterval(timeMap);
             }, timeMs);
@@ -62,7 +67,7 @@ function checkInterval(timeMap) {
 /**
  * @class TimeMap
  */
-class TimeMap {
+class TimeMap extends events {
     /**
      * @constructor
      * @memberof TimeMap#
@@ -71,6 +76,7 @@ class TimeMap {
      * @throws {TypeError}
      */
     constructor(timeLifeMs = 1000) {
+        super();
         if (typeof timeLifeMs !== "number") {
             throw new TypeError("timeLifeMs must be a number");
         }
@@ -109,6 +115,7 @@ class TimeMap {
         if (this[SymInterval] === null) {
             this[SymCurrKey] = key;
             this[SymInterval] = setTimeout(() => {
+                this.emit("expiration", key, self.get(key));
                 self.delete(key);
                 checkInterval(this);
             }, this.timeLife);

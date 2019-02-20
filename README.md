@@ -24,6 +24,10 @@ const { strictEqual } = require("assert");
 const TimeMap = require("@slimio/timemap");
 
 const col = new TimeMap(1000);
+col.on("expiration", (key, value) => {
+    console.log(`col key ${key} has expired!`);
+});
+
 col.set("foo", "bar");
 col.set("test", true);
 strictEqual(col.has("foo"), true);
