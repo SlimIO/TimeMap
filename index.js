@@ -43,14 +43,12 @@ function checkInterval(timeMap) {
             self.delete(key);
         }
         else {
-            const timeMs = deltaTime < 0 ? timeMap.timeLife : timeMap.timeLife - deltaTime;
-
             timeMap[SymCurrKey] = key;
             timeMap[SymInterval] = setTimeout(() => {
                 timeMap.emit("expiration", key, self.get(key));
                 self.delete(key);
                 checkInterval(timeMap);
-            }, timeMs);
+            }, timeMap.timeLife - deltaTime);
             break;
         }
     }
