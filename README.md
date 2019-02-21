@@ -44,6 +44,22 @@ setTimeout(() => {
 }, 1100);
 ```
 
+## Events
+TimeMap class is extended by a [Node.js EventEmitter](https://nodejs.org/api/events.html). The class can trigger several events:
+
+| event name | description |
+| --- | --- |
+| expiration | Expired key are emitted before deletion |
+
+```js
+const map = new TimeMap(100);
+map.on("expiration", (key, value) => {
+    console.log(`key: ${key}, value: ${value}`);
+});
+
+map.set("foo", "bar");
+```
+
 ## API
 Following methods are members of **TimeMap** class. The type `TimeMap.key` is declared as follow:
 ```ts
