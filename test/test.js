@@ -95,7 +95,7 @@ avaTest("delete key in TimeMap", async(assert) => {
         map.set("woo", "moo");
     }, 50);
 
-    await new Promise((resolve) => setTimeout(resolve, 110));
+    await new Promise((resolve) => setTimeout(resolve, 150));
     assert.false(map.has("woo"));
 });
 
@@ -129,4 +129,21 @@ avaTest("insert many rows", async(assert) => {
 
     await new Promise((resolve) => setTimeout(resolve, 150));
     assert.is(map.size, 0);
+});
+
+avaTest("set the same current key", async(assert) => {
+    assert.plan(1);
+    const map = new TimeMap(100);
+    map.on("expiration", (key, value) => {
+        if (key === "foo" && value === "woo!") {
+            assert.pass();
+        }
+    });
+
+    map.set("foo", "bar");
+    setTimeout(() => {
+        map.set("foo", "woo!");
+    }, 50);
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
 });
