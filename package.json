@@ -14,7 +14,12 @@
         "type": "git",
         "url": "git+https://github.com/SlimIO/TimeMap.git"
     },
-    "keywords": [],
+    "keywords": [
+        "map",
+        "timemap",
+        "lifetime",
+        "timed"
+    ],
     "author": "SlimIO",
     "license": "MIT",
     "bugs": {
