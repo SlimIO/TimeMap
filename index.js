@@ -166,8 +166,11 @@ class TimeMap extends events {
      */
     get(key) {
         const self = TimeStore.get(this);
+        if (!self.has(key)) {
+            throw new Error(`Unknown key ${key}`);
+        }
 
-        return self.has(key) ? self.get(key).value : null;
+        return self.get(key).value;
     }
 
     /**

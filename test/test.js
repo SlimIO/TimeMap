@@ -61,11 +61,12 @@ avaTest("get key in TimeMap", async(assert) => {
         map.set("woo", "moo");
     }, 50);
 
-    let ret = map.get("foo");
+    const ret = map.get("foo");
     assert.is(ret, "bar");
 
-    ret = map.get("world!");
-    assert.is(ret, null);
+    assert.throws(() => {
+        map.get("world!");
+    }, { instanceOf: Error, message: "Unknown key world!" });
 
     await new Promise((resolve) => setTimeout(resolve, 200));
 });
