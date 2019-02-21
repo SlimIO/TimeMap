@@ -5,6 +5,7 @@ import * as events from "events";
 declare class TimeMap extends events {
     constructor(timeLifeMs: number);
 
+    public static DEFAULT_TIMELIFE_MS: number;
     public readonly timeLife: number;
 
     has(key: TimeMap.key): boolean;

@@ -25,9 +25,6 @@ const SymTime = Symbol("timelife");
  * @returns {void}
  */
 function checkInterval(timeMap) {
-    if (!(timeMap instanceof TimeMap)) {
-        return void 0;
-    }
     const self = TimeStore.get(timeMap);
     timeMap[SymInterval] = null;
     timeMap[SymCurrKey] = null;
@@ -72,7 +69,7 @@ class TimeMap extends events {
      *
      * @throws {TypeError}
      */
-    constructor(timeLifeMs = 1000) {
+    constructor(timeLifeMs = TimeMap.DEFAULT_TIMELIFE_MS) {
         super();
         if (typeof timeLifeMs !== "number") {
             throw new TypeError("timeLifeMs must be a number");
@@ -187,5 +184,7 @@ class TimeMap extends events {
         TimeStore.set(this, new Map());
     }
 }
+
+TimeMap.DEFAULT_TIMELIFE_MS = 1000;
 
 module.exports = TimeMap;
