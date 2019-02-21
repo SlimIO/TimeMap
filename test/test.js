@@ -57,7 +57,9 @@ avaTest("get key in TimeMap", async(assert) => {
     });
 
     map.set("foo", "bar");
-    map.set("woo", "moo");
+    setTimeout(() => {
+        map.set("woo", "moo");
+    }, 50);
 
     let ret = map.get("foo");
     assert.is(ret, "bar");
@@ -65,5 +67,49 @@ avaTest("get key in TimeMap", async(assert) => {
     ret = map.get("world!");
     assert.is(ret, null);
 
+    await new Promise((resolve) => setTimeout(resolve, 200));
+});
+
+avaTest("delete.key must be a string or a symbol", (assert) => {
+    assert.throws(() => {
+        const map = new TimeMap();
+        map.delete(null, null);
+    }, { instanceOf: TypeError, message: "key must be a string or a symbol" });
+});
+
+avaTest("delete key in TimeMap", async(assert) => {
+    assert.plan(2);
+    const map = new TimeMap(100);
+    map.on("expiration", () => {
+        assert.pass();
+        map.delete("hello");
+        setImmediate(() => {
+            map.delete("woo");
+        });
+    });
+
+    map.set("foo", "bar");
+    map.set("hello", "world");
+    setTimeout(() => {
+        map.set("woo", "moo");
+    }, 50);
+
     await new Promise((resolve) => setTimeout(resolve, 110));
+    assert.false(map.has("woo"));
+});
+
+avaTest("clear TimeMap", async(assert) => {
+    assert.plan(0);
+    const map = new TimeMap(100);
+    map.clear();
+    map.on("expiration", () => {
+        assert.pass();
+    });
+
+    map.set("foo", "bar");
+    setTimeout(() => {
+        map.clear();
+    }, 50);
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
 });
