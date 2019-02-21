@@ -138,7 +138,18 @@ setTimeout(() => {
 <details><summary>get< T >(key: TimeMap.key): T | null</summary>
 <br />
 
-Get a given key from the Class.
+Get a given key from the Class. Throw an Error if the key doesn't exist in the Collection (use .has() before).
+```js
+const assert = require("assert");
+
+const map = new TimeMap(100);
+map.set("foo", "bar");
+
+assert.strictEqual(map.get("foo"), "bar");
+assert.throws(() => {
+    map.get("world!");
+}, { name: "Error" });
+```
 </details>
 
 <details><summary>clear(): void</summary>
