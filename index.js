@@ -10,6 +10,7 @@ const events = require("events");
 /**
  * @const TimeStore
  * @type {WeakMap<TimeMap, Map<String | Symbol, TimeValue>>}
+ * @desc Use this to avoid memory leak when TimeMap are GC, and avoid data leak too.
  */
 const TimeStore = new WeakMap();
 
@@ -20,7 +21,7 @@ const SymTime = Symbol("timelife");
 
 /**
  * @func checkInterval
- * @desc Re-schedule TimeMap interval is there is available keys!
+ * @desc Re-schedule TimeMap interval if any keys are available!
  * @param {!TimeMap} timeMap timeMap
  * @returns {void}
  */
@@ -33,16 +34,19 @@ function checkInterval(timeMap) {
         return void 0;
     }
 
+    // Sort elements by date (timestamp)
     const sortedElements = [...self.entries()].sort((a, b) => b[1].ts - a[1].ts);
     while (sortedElements.length > 0) {
         const [key, elem] = sortedElements.pop();
         const deltaTime = Date.now() - elem.ts;
 
         if (deltaTime >= timeMap.timeLife) {
+            // When the key is already expired too
             timeMap.emit("expiration", key, self.get(key));
             self.delete(key);
         }
         else {
+            // Re-schedule timer
             timeMap[SymCurrKey] = key;
             timeMap[SymInterval] = setTimeout(() => {
                 timeMap.emit("expiration", key, self.get(key));
@@ -57,7 +61,10 @@ function checkInterval(timeMap) {
 }
 
 /**
+ * @author GENTILHOMME Thomas <gentilhomme.thomas@gmail.com>
+ *
  * @class TimeMap
+ * @classdesc ECMAScript 6 Map-Like implementation with timelife keys/values.
  */
 class TimeMap extends events {
     /**
@@ -66,6 +73,14 @@ class TimeMap extends events {
      * @param {!Number} timeLifeMs timeLife in milliseconds
      *
      * @throws {TypeError}
+     *
+     * @example
+     * const map = new TimeMap(100);
+     * console.log(map.timeLife); // 100
+     * map.set("hello", "world!");
+     * setTimeout(() => {
+     *     console.log(map.has("hello")); // False
+     * }, 110);
      */
     constructor(timeLifeMs = TimeMap.DEFAULT_TIMELIFE_MS) {
         super();
@@ -74,6 +89,9 @@ class TimeMap extends events {
         }
 
         TimeStore.set(this, new Map());
+
+        // These properties are private, that why we use Symbols as key
+        // they can still be recovered with Reflect.ownKeys()
         Reflect.defineProperty(this, SymInterval, {
             writable: true,
             value: null
@@ -87,6 +105,7 @@ class TimeMap extends events {
 
     /**
      * @member {Number} size
+     * @desc The size accessor property returns the number of elements in the TimeMap.
      * @memberof TimeMap#
      */
     get size() {
@@ -95,6 +114,7 @@ class TimeMap extends events {
 
     /**
      * @member {Number} timeLife
+     * @desc The timeLife accessor property return the configured time life for keys
      * @memberof TimeMap#
      */
     get timeLife() {
@@ -102,9 +122,12 @@ class TimeMap extends events {
     }
 
     /**
+     * @version 0.1.0
+     *
      * @method set
+     * @desc The set() method adds or updates an element with a specified key and value to the TimeMap object.
      * @memberof TimeMap#
-     * @param {String | Symbol} key key
+     * @param {String | Symbol} key String or Symbol key
      * @param {*} value ant value
      * @returns {void}
      *
@@ -130,12 +153,25 @@ class TimeMap extends events {
     }
 
     /**
+     * @version 0.1.0
+     *
      * @method delete
+     * @desc Delete a given key from the Map, if key is the currentKey interval will be rescheduled!
      * @memberof TimeMap#
      * @param {String | Symbol} key key
      * @returns {void}
      *
      * @throws {TypeError}
+     *
+     * @example
+     * const map = new TimeMap(100);
+     * map.set("foo", "bar");
+     * map.set("hello", "world");
+     *
+     * setTimeout(() => map.delete("foo"), 50);
+     * setTimeout(() => {
+     *    console.log(map.has("hello")); // false
+     * }, 100);
      */
     delete(key) {
         if (typeof key !== "string" && typeof key !== "symbol") {
@@ -154,7 +190,10 @@ class TimeMap extends events {
     }
 
     /**
+     * @version 0.1.0
+     *
      * @method has
+     * @desc Returns a boolean indicating whether an element with the specified key exists or not.
      * @memberof TimeMap#
      * @param {String | Symbol} key key
      * @returns {Boolean}
@@ -164,11 +203,16 @@ class TimeMap extends events {
     }
 
     /**
+     * @version 0.1.0
+     *
      * @template T
      * @method get
+     * @desc The get() method returns a specified element from the TimeMap object.
      * @memberof TimeMap#
      * @param {String | Symbol} key key
      * @returns {T | null}
+     *
+     * @throws {Error}
      */
     get(key) {
         const self = TimeStore.get(this);
@@ -180,7 +224,10 @@ class TimeMap extends events {
     }
 
     /**
+     * @version 0.1.0
+     *
      * @method clear
+     * @desc Clear internal timer and internal data. Everything will be reset.
      * @memberof TimeMap#
      * @returns {void}
      */
