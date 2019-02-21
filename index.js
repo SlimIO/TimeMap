@@ -42,14 +42,14 @@ function checkInterval(timeMap) {
 
         if (deltaTime >= timeMap.timeLife) {
             // When the key is already expired too
-            timeMap.emit("expiration", key, self.get(key));
+            timeMap.emit("expiration", key, self.get(key).value);
             self.delete(key);
         }
         else {
             // Re-schedule timer
             timeMap[SymCurrKey] = key;
             timeMap[SymInterval] = setTimeout(() => {
-                timeMap.emit("expiration", key, self.get(key));
+                timeMap.emit("expiration", key, self.get(key).value);
                 self.delete(key);
                 checkInterval(timeMap);
             }, timeMap.timeLife - deltaTime);
@@ -150,7 +150,7 @@ class TimeMap extends events {
                 this[SymCurrKey] = key;
             }
             this[SymInterval] = setTimeout(() => {
-                this.emit("expiration", key, self.get(key));
+                this.emit("expiration", key, self.get(key).value);
                 self.delete(key);
                 checkInterval(this);
             }, this.timeLife);
