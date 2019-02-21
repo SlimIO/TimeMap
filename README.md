@@ -6,7 +6,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/SlimIO/TimeMap/badge.svg?targetFile=package.json)](https://snyk.io/test/github/SlimIO/TimeMap?targetFile=package.json)
 [![Build Status](https://travis-ci.com/SlimIO/TimeMap.svg?branch=master)](https://travis-ci.com/SlimIO/TimeMap)
 
-ECMAScript 6 Map-Like implementation with timelife keys/values. Under the hood it use WeakMap to avoid Memory Leak.
+ECMAScript 6 Map-Like implementation with keys that have a defined timelife. All data are stored in a [WeakMap](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/WeakMap) under the hood to avoid Memory Leak and Data Leak.
 
 ## Requirements
 - Node.js v10 or higher
