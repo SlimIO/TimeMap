@@ -21,7 +21,7 @@ const SymTime = Symbol("timelife");
 /**
  * @func checkInterval
  * @desc Re-schedule TimeMap interval is there is available keys!
- * @param {!TimeMap} timeMap
+ * @param {!TimeMap} timeMap timeMap
  * @returns {void}
  */
 function checkInterval(timeMap) {
@@ -68,7 +68,7 @@ class TimeMap extends events {
     /**
      * @constructor
      * @memberof TimeMap#
-     * @param {!Number} timeLifeMs
+     * @param {!Number} timeLifeMs timeLife in milliseconds
      *
      * @throws {TypeError}
      */
