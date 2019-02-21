@@ -4,6 +4,7 @@
 ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
 ![dep](https://img.shields.io/david/slimio/timemap.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/SlimIO/TimeMap/badge.svg?targetFile=package.json)](https://snyk.io/test/github/SlimIO/TimeMap?targetFile=package.json)
+[![Build Status](https://travis-ci.com/SlimIO/TimeMap.svg?branch=master)](https://travis-ci.com/SlimIO/TimeMap)
 
 ECMAScript 6 Map-Like implementation with timelife keys/values. Under the hood it use WeakMap to avoid Memory Leak.
 
