@@ -161,5 +161,33 @@ assert.throws(() => {
 Clear internal timer and internal data. Everything will be reset.
 </details>
 
+### Properties
+All following properties are **readonly**
+
+<details><summary>.size</summary>
+<br />
+
+The size accessor property returns the number of elements in the TimeMap.
+```js
+const { strictEqual } = require("assert");
+
+const map = new TimeMap();
+map.set("foo", "bar");
+strictEqual(map.size, 1);
+```
+</details>
+
+<details><summary>.timeLife</summary>
+<br />
+
+The timeLife accessor property return the configured time life for keys
+```js
+const { strictEqual } = require("assert");
+
+const map = new TimeMap(2000);
+strictEqual(map.timeLife, 2000);
+```
+</details>
+
 ## License
 MIT
