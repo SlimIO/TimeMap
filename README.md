@@ -4,7 +4,7 @@
 ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
 ![dep](https://img.shields.io/david/slimio/timemap.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/SlimIO/TimeMap/badge.svg?targetFile=package.json)](https://snyk.io/test/github/SlimIO/TimeMap?targetFile=package.json)
-[![Build Status](https://travis-ci.com/SlimIO/TimeMap.svg?branch=master)](https://travis-ci.com/SlimIO/TimeMap)
+[![Build Status](https://travis-ci.com/SlimIO/TimeMap.svg?branch=master)](https://travis-ci.com/SlimIO/TimeMap) [![Greenkeeper badge](https://badges.greenkeeper.io/SlimIO/TimeMap.svg)](https://greenkeeper.io/)
 
 ECMAScript 6 Map-Like implementation with keys that have a defined timelife. All data are stored in a [WeakMap](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/WeakMap) under the hood to avoid Memory Leak and Data Leak.
 
