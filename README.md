@@ -13,9 +13,9 @@ ECMAScript 6 Map-Like implementation with timelife keys/values. Under the hood i
 This package is available in the Node Package Repository and can be easily installed with [npm](https://docs.npmjs.com/getting-started/what-is-npm) or [yarn](https://yarnpkg.com).
 
 ```bash
-$ npm i @slimio/TimeMap
+$ npm i @slimio/timemap
 # or
-$ yarn add @slimio/TimeMap
+$ yarn add @slimio/timemap
 ```
 
 ## Usage example
