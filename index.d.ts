@@ -12,7 +12,7 @@ declare class TimeMap extends events {
     has(key: TimeMap.key): boolean;
     delete(key: TimeMap.key): void;
     set(key: TimeMap.key, value: any): void;
-    get<T>(key: TimeMap.key): T | null;
+    get<T>(key: TimeMap.key): T;
     clear(): void;
 }
 

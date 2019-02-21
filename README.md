@@ -138,7 +138,7 @@ setTimeout(() => {
 ```
 </details>
 
-<details><summary>get< T >(key: TimeMap.key): T | null</summary>
+<details><summary>get< T >(key: TimeMap.key): T</summary>
 <br />
 
 Get a given key from the Class. Throw an Error if the key doesn't exist in the Collection (use .has() before).

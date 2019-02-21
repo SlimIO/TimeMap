@@ -217,7 +217,7 @@ class TimeMap extends events {
      * @desc The get() method returns a specified element from the TimeMap object.
      * @memberof TimeMap#
      * @param {String | Symbol} key key
-     * @returns {T | null}
+     * @returns {T}
      *
      * @throws {Error}
      */
