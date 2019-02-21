@@ -141,14 +141,21 @@ class TimeMap extends events {
         const self = TimeStore.get(this);
         const ts = Date.now();
 
-        if (this[SymInterval] === null) {
-            this[SymCurrKey] = key;
+        const isCurrKey = this[SymCurrKey] === key;
+        if (isCurrKey || this[SymInterval] === null) {
+            if (isCurrKey) {
+                clearTimeout(this[SymInterval]);
+            }
+            else {
+                this[SymCurrKey] = key;
+            }
             this[SymInterval] = setTimeout(() => {
                 this.emit("expiration", key, self.get(key));
                 self.delete(key);
                 checkInterval(this);
             }, this.timeLife);
         }
+
         self.set(key, { ts, value });
     }
 
