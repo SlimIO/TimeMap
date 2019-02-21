@@ -88,6 +88,14 @@ class TimeMap extends events {
     }
 
     /**
+     * @member {Number} size
+     * @memberof TimeMap#
+     */
+    get size() {
+        return TimeStore.get(this).size;
+    }
+
+    /**
      * @member {Number} timeLife
      * @memberof TimeMap#
      */

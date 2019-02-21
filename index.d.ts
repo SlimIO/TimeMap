@@ -7,6 +7,7 @@ declare class TimeMap extends events {
 
     public static DEFAULT_TIMELIFE_MS: number;
     public readonly timeLife: number;
+    public readonly size: number;
 
     has(key: TimeMap.key): boolean;
     delete(key: TimeMap.key): void;
