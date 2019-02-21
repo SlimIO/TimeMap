@@ -114,3 +114,19 @@ avaTest("clear TimeMap", async(assert) => {
 
     await new Promise((resolve) => setTimeout(resolve, 100));
 });
+
+avaTest("insert many rows", async(assert) => {
+    assert.plan(7);
+    const map = new TimeMap(100);
+    assert.is(map.size, 0);
+    map.on("expiration", () => assert.pass());
+
+    map.set("foo", "bar");
+    map.set("woo", "boo");
+    map.set("hello", "world!");
+    map.set("tchao", "mao");
+    assert.is(map.size, 4);
+
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    assert.is(map.size, 0);
+});
