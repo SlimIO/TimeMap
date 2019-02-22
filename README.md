@@ -66,7 +66,7 @@ map.set("foo", "bar");
 ## API
 Following methods are members of **TimeMap** class. The type `TimeMap.key` is declared as follow:
 ```ts
-type key = symbol | string;
+type key = symbol | string | number;
 ```
 
 <details><summary>constructor(timeLifeMs: number)</summary>
