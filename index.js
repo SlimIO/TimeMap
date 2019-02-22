@@ -9,7 +9,7 @@ const events = require("events");
 
 /**
  * @const TimeStore
- * @type {WeakMap<TimeMap, Map<String | Symbol, TimeValue>>}
+ * @type {WeakMap<TimeMap, Map<String | Symbol | Number, TimeValue>>}
  * @desc Use this to avoid memory leak when TimeMap are GC, and avoid data leak too.
  */
 const TimeStore = new WeakMap();
@@ -252,6 +252,16 @@ class TimeMap extends events {
 
         this[SymCurrKey] = null;
         TimeStore.set(this, new Map());
+    }
+
+    /**
+     * @method keys
+     * @desc Return all keys
+     * @memberof TimeMap#
+     * @returns {IterableIterator<String | Symbol | Number>}
+     */
+    keys() {
+        return TimeStore.get(this).keys();
     }
 }
 

@@ -14,6 +14,7 @@ declare class TimeMap extends events {
     set(key: TimeMap.key, value: any): void;
     get<T>(key: TimeMap.key): T;
     clear(): void;
+    keys(): IterableIterator<TimeMap.key>;
 }
 
 declare namespace TimeMap {
