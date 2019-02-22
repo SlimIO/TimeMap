@@ -161,6 +161,21 @@ assert.throws(() => {
 Clear internal timer and internal data. Everything will be reset.
 </details>
 
+<details><summary>keys(): IterableIterator< TimeMap.key ></summary>
+<br />
+
+The keys() method returns a new Iterator object that contains the keys for each element in the TimeMap object in insertion order.
+```js
+const { deepEqual } = require("assert");
+
+const map = new TimeMap();
+map.set("foo", "bar");
+map.set("yo", "boo");
+
+deepEqual(["foo", "yo"], [...map.keys()]);
+```
+</details>
+
 ### Properties
 All following properties are **readonly**
 
