@@ -116,7 +116,7 @@ avaTest("clear TimeMap", async(assert) => {
 });
 
 avaTest("insert many rows", async(assert) => {
-    assert.plan(7);
+    assert.plan(8);
     const map = new TimeMap(100);
     assert.is(map.size, 0);
     map.on("expiration", () => assert.pass());
@@ -125,6 +125,7 @@ avaTest("insert many rows", async(assert) => {
     map.set("woo", "boo");
     map.set("hello", "world!");
     map.set("tchao", "mao");
+    assert.deepEqual(["foo", "woo", "hello", "tchao"], [...map.keys()]);
     assert.is(map.size, 4);
 
     await new Promise((resolve) => setTimeout(resolve, 150));
