@@ -17,7 +17,7 @@ declare class TimeMap extends events {
 }
 
 declare namespace TimeMap {
-    type key = symbol | string;
+    type key = symbol | string | number;
 }
 
 export as namespace TimeMap;

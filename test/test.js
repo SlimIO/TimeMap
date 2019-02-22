@@ -30,7 +30,7 @@ avaTest("set key must be string or symbol", (assert) => {
     assert.throws(() => {
         const map = new TimeMap();
         map.set(null, null);
-    }, { instanceOf: TypeError, message: "key must be a string or a symbol" });
+    }, { instanceOf: TypeError, message: "key must be a string, a symbol or a number" });
 });
 
 avaTest("set key in TimeMap", async(assert) => {
@@ -75,7 +75,7 @@ avaTest("delete.key must be a string or a symbol", (assert) => {
     assert.throws(() => {
         const map = new TimeMap();
         map.delete(null, null);
-    }, { instanceOf: TypeError, message: "key must be a string or a symbol" });
+    }, { instanceOf: TypeError, message: "key must be a string, a symbol or a number" });
 });
 
 avaTest("delete key in TimeMap", async(assert) => {

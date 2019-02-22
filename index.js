@@ -20,6 +20,20 @@ const SymCurrKey = Symbol("currentKey");
 const SymTime = Symbol("timelife");
 
 /**
+ * @func assertKey
+ * @param {!(String | Symbol | Number)} key key
+ * @returns {void}
+ *
+ * @throws {TypeError}
+ */
+function assertKey(key) {
+    const tKey = typeof key;
+    if (tKey !== "string" && tKey !== "symbol" && tKey !== "number") {
+        throw new TypeError("key must be a string, a symbol or a number");
+    }
+}
+
+/**
  * @func checkInterval
  * @desc Re-schedule TimeMap interval if any keys are available!
  * @param {!TimeMap} timeMap timeMap
@@ -42,16 +56,15 @@ function checkInterval(timeMap) {
 
         if (deltaTime >= timeMap.timeLife) {
             // When the key is already expired too
-            timeMap.emit("expiration", key, self.get(key).value);
-            self.delete(key);
+            timeMap.emit("expiration", key, elem.value);
+            timeMap.delete(key);
         }
         else {
             // Re-schedule timer
             timeMap[SymCurrKey] = key;
             timeMap[SymInterval] = setTimeout(() => {
-                timeMap.emit("expiration", key, self.get(key).value);
-                self.delete(key);
-                checkInterval(timeMap);
+                timeMap.emit("expiration", key, elem.value);
+                timeMap.delete(key);
             }, timeMap.timeLife - deltaTime);
             break;
         }
@@ -127,17 +140,14 @@ class TimeMap extends events {
      * @method set
      * @desc The set() method adds or updates an element with a specified key and value to the TimeMap object.
      * @memberof TimeMap#
-     * @param {String | Symbol} key String or Symbol key
+     * @param {!(String | Symbol | Number)} key String or Symbol key
      * @param {*} value ant value
      * @returns {void}
      *
      * @throws {TypeError}
      */
     set(key, value) {
-        if (typeof key !== "string" && typeof key !== "symbol") {
-            throw new TypeError("key must be a string or a symbol");
-        }
-
+        assertKey(key);
         const self = TimeStore.get(this);
         const ts = Date.now();
 
@@ -150,9 +160,8 @@ class TimeMap extends events {
                 this[SymCurrKey] = key;
             }
             this[SymInterval] = setTimeout(() => {
-                this.emit("expiration", key, self.get(key).value);
-                self.delete(key);
-                checkInterval(this);
+                this.emit("expiration", key, value);
+                this.delete(key);
             }, this.timeLife);
         }
 
@@ -165,7 +174,7 @@ class TimeMap extends events {
      * @method delete
      * @desc Delete a given key from the Map, if key is the currentKey interval will be rescheduled!
      * @memberof TimeMap#
-     * @param {String | Symbol} key key
+     * @param {!(String | Symbol | Number)} key key
      * @returns {void}
      *
      * @throws {TypeError}
@@ -181,9 +190,7 @@ class TimeMap extends events {
      * }, 100);
      */
     delete(key) {
-        if (typeof key !== "string" && typeof key !== "symbol") {
-            throw new TypeError("key must be a string or a symbol");
-        }
+        assertKey(key);
         const self = TimeStore.get(this);
 
         if (this[SymCurrKey] === key) {
