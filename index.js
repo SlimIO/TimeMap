@@ -40,16 +40,16 @@ function assertKey(key) {
  * @returns {void}
  */
 function checkInterval(timeMap) {
-    const self = TimeStore.get(timeMap);
+    const curr = TimeStore.get(timeMap);
     timeMap[SymInterval] = null;
     timeMap[SymCurrKey] = null;
 
-    if (self.size === 0) {
+    if (curr.size === 0) {
         return void 0;
     }
 
     // Sort elements by date (timestamp)
-    const sortedElements = [...self.entries()].sort((a, b) => b[1].ts - a[1].ts);
+    const sortedElements = [...curr.entries()].sort((left, right) => right[1].ts - left[1].ts);
     while (sortedElements.length > 0) {
         const [key, elem] = sortedElements.pop();
         const deltaTime = Date.now() - elem.ts;
@@ -148,7 +148,7 @@ class TimeMap extends events {
      */
     set(key, value) {
         assertKey(key);
-        const self = TimeStore.get(this);
+        const curr = TimeStore.get(this);
         const ts = Date.now();
 
         const isCurrKey = this[SymCurrKey] === key;
@@ -165,7 +165,7 @@ class TimeMap extends events {
             }, this.timeLife);
         }
 
-        self.set(key, { ts, value });
+        curr.set(key, { ts, value });
     }
 
     /**
@@ -191,15 +191,15 @@ class TimeMap extends events {
      */
     delete(key) {
         assertKey(key);
-        const self = TimeStore.get(this);
+        const curr = TimeStore.get(this);
 
         if (this[SymCurrKey] === key) {
             clearTimeout(this[SymInterval]);
-            self.delete(key);
+            curr.delete(key);
             checkInterval(this);
         }
         else {
-            self.delete(key);
+            curr.delete(key);
         }
     }
 
@@ -229,12 +229,12 @@ class TimeMap extends events {
      * @throws {Error}
      */
     get(key) {
-        const self = TimeStore.get(this);
-        if (!self.has(key)) {
+        const curr = TimeStore.get(this);
+        if (!curr.has(key)) {
             throw new Error(`Unknown key ${key}`);
         }
 
-        return self.get(key).value;
+        return curr.get(key).value;
     }
 
     /**
