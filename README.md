@@ -205,5 +205,8 @@ strictEqual(map.timeLife, 2000);
 ```
 </details>
 
+## Dependencies
+This project have no dependencies.
+
 ## License
 MIT
