@@ -1,16 +1,18 @@
+"use strict";
+
 // Require Node.js Dependencies
 const events = require("events");
 
 /**
- * @typedef {Object} TimeValue
+ * @typedef {object} TimeValue
  * @property {any} value
- * @property {Number} ts
+ * @property {number} ts
  */
 
 /**
- * @const TimeStore
- * @type {WeakMap<TimeMap, Map<String | Symbol | Number, TimeValue>>}
- * @desc Use this to avoid memory leak when TimeMap are GC, and avoid data leak too.
+ * @constant TimeStore
+ * @type {WeakMap<TimeMap, Map<string|Symbol|number, TimeValue>>}
+ * @description Use this to avoid memory leak when TimeMap are GC, and avoid data leak too.
  */
 const TimeStore = new WeakMap();
 
@@ -20,8 +22,8 @@ const SymCurrKey = Symbol("currentKey");
 const SymTime = Symbol("timelife");
 
 /**
- * @func assertKey
- * @param {!(String | Symbol | Number)} key key
+ * @function assertKey
+ * @param {!(string|Symbol|number)} key key
  * @returns {void}
  *
  * @throws {TypeError}
@@ -34,8 +36,8 @@ function assertKey(key) {
 }
 
 /**
- * @func checkInterval
- * @desc Re-schedule TimeMap interval if any keys are available!
+ * @function checkInterval
+ * @description Re-schedule TimeMap interval if any keys are available!
  * @param {!TimeMap} timeMap timeMap
  * @returns {void}
  */
@@ -81,9 +83,9 @@ function checkInterval(timeMap) {
  */
 class TimeMap extends events {
     /**
-     * @constructor
+     * @class
      * @memberof TimeMap#
-     * @param {!Number} timeLifeMs timeLife in milliseconds
+     * @param {!number} timeLifeMs timeLife in milliseconds
      *
      * @throws {TypeError}
      *
@@ -117,18 +119,20 @@ class TimeMap extends events {
     }
 
     /**
-     * @member {Number} size
-     * @desc The size accessor property returns the number of elements in the TimeMap.
+     * @member {number} size
+     * @description The size accessor property returns the number of elements in the TimeMap.
      * @memberof TimeMap#
+     * @returns {number}
      */
     get size() {
         return TimeStore.get(this).size;
     }
 
     /**
-     * @member {Number} timeLife
-     * @desc The timeLife accessor property return the configured time life for keys
+     * @member {number} timeLife
+     * @description The timeLife accessor property return the configured time life for keys
      * @memberof TimeMap#
+     * @returns {number}
      */
     get timeLife() {
         return this[SymTime];
@@ -137,10 +141,10 @@ class TimeMap extends events {
     /**
      * @version 0.1.0
      *
-     * @method set
-     * @desc The set() method adds or updates an element with a specified key and value to the TimeMap object.
+     * @function set
+     * @description The set() method adds or updates an element with a specified key and value to the TimeMap object.
      * @memberof TimeMap#
-     * @param {!(String | Symbol | Number)} key String or Symbol key
+     * @param {!(string|Symbol|number)} key String or Symbol key
      * @param {*} value ant value
      * @returns {void}
      *
@@ -171,10 +175,10 @@ class TimeMap extends events {
     /**
      * @version 0.1.0
      *
-     * @method delete
-     * @desc Delete a given key from the Map, if key is the currentKey interval will be rescheduled!
+     * @function delete
+     * @description Delete a given key from the Map, if key is the currentKey interval will be rescheduled!
      * @memberof TimeMap#
-     * @param {!(String | Symbol | Number)} key key
+     * @param {!(string|Symbol|number)} key key
      * @returns {void}
      *
      * @throws {TypeError}
@@ -206,11 +210,11 @@ class TimeMap extends events {
     /**
      * @version 0.1.0
      *
-     * @method has
-     * @desc Returns a boolean indicating whether an element with the specified key exists or not.
+     * @function has
+     * @description Returns a boolean indicating whether an element with the specified key exists or not.
      * @memberof TimeMap#
-     * @param {String | Symbol} key key
-     * @returns {Boolean}
+     * @param {string|Symbol} key key
+     * @returns {boolean}
      */
     has(key) {
         return TimeStore.get(this).has(key);
@@ -220,10 +224,10 @@ class TimeMap extends events {
      * @version 0.1.0
      *
      * @template T
-     * @method get
-     * @desc The get() method returns a specified element from the TimeMap object.
+     * @function get
+     * @description The get() method returns a specified element from the TimeMap object.
      * @memberof TimeMap#
-     * @param {String | Symbol} key key
+     * @param {string|Symbol} key key
      * @returns {T}
      *
      * @throws {Error}
@@ -240,8 +244,8 @@ class TimeMap extends events {
     /**
      * @version 0.1.0
      *
-     * @method clear
-     * @desc Clear internal timer and internal data. Everything will be reset.
+     * @function clear
+     * @description Clear internal timer and internal data. Everything will be reset.
      * @memberof TimeMap#
      * @returns {void}
      */
@@ -255,10 +259,10 @@ class TimeMap extends events {
     }
 
     /**
-     * @method keys
-     * @desc Return all keys
+     * @function keys
+     * @description Return all keys
      * @memberof TimeMap#
-     * @returns {IterableIterator<String | Symbol | Number>}
+     * @returns {IterableIterator<string|Symbol|number>}
      */
     keys() {
         return TimeStore.get(this).keys();
