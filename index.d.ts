@@ -12,7 +12,7 @@ declare class TimeMap<T> extends events {
     has(key: TimeMap.key): boolean;
     delete(key: TimeMap.key): void;
     set(key: TimeMap.key, value: T): void;
-    get(key: TimeMap.key): T;
+    get(key: TimeMap.key, refreshTimestamp?: boolean): T;
     clear(): void;
     keys(): IterableIterator<TimeMap.key>;
 }

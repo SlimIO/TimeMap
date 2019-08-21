@@ -228,17 +228,26 @@ class TimeMap extends events {
      * @description The get() method returns a specified element from the TimeMap object.
      * @memberof TimeMap#
      * @param {string|Symbol} key key
+     * @param {boolean} [refreshTimestamp=false]
      * @returns {T}
      *
      * @throws {Error}
      */
-    get(key) {
+    get(key, refreshTimestamp = false) {
         const curr = TimeStore.get(this);
         if (!curr.has(key)) {
             throw new Error(`Unknown key ${key}`);
         }
 
-        return curr.get(key).value;
+        const currO = curr.get(key);
+        if (refreshTimestamp) {
+            currO.ts = Date.now();
+            if (this[SymCurrKey] === key) {
+                checkInterval(this);
+            }
+        }
+
+        return currO.value;
     }
 
     /**
