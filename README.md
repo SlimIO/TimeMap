@@ -10,7 +10,7 @@
 ECMAScript 6 Map-Like implementation with keys that have a defined timelife.
 
 ## Requirements
-- [Node.js](https://nodejs.org/en/) v10 or higher
+- [Node.js](https://nodejs.org/en/) v12 or higher
 
 ## Getting Started
 
