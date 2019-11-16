@@ -11,7 +11,7 @@ const events = require("events");
 
 /**
  * @constant TimeStore
- * @type {WeakMap<TimeMap, Map<string|Symbol|number, TimeValue>>}
+ * @type {WeakMap<TimeMap, Map<string|symbol|number, TimeValue>>}
  * @description Use this to avoid memory leak when TimeMap are GC, and avoid data leak too.
  */
 const TimeStore = new WeakMap();
@@ -23,7 +23,7 @@ const SymTime = Symbol("timelife");
 
 /**
  * @function assertKey
- * @param {!(string|Symbol|number)} key key
+ * @param {!(string|symbol|number)} key key
  * @returns {void}
  *
  * @throws {TypeError}
@@ -144,7 +144,7 @@ class TimeMap extends events {
      * @function set
      * @description The set() method adds or updates an element with a specified key and value to the TimeMap object.
      * @memberof TimeMap#
-     * @param {!(string|Symbol|number)} key String or Symbol key
+     * @param {!(string|symbol|number)} key String or Symbol key
      * @param {*} value ant value
      * @returns {void}
      *
@@ -178,7 +178,7 @@ class TimeMap extends events {
      * @function delete
      * @description Delete a given key from the Map, if key is the currentKey interval will be rescheduled!
      * @memberof TimeMap#
-     * @param {!(string|Symbol|number)} key key
+     * @param {!(string|symbol|number)} key key
      * @returns {void}
      *
      * @throws {TypeError}
@@ -213,7 +213,7 @@ class TimeMap extends events {
      * @function has
      * @description Returns a boolean indicating whether an element with the specified key exists or not.
      * @memberof TimeMap#
-     * @param {string|Symbol} key key
+     * @param {string|symbol} key key
      * @returns {boolean}
      */
     has(key) {
@@ -227,7 +227,7 @@ class TimeMap extends events {
      * @function get
      * @description The get() method returns a specified element from the TimeMap object.
      * @memberof TimeMap#
-     * @param {string|Symbol} key key
+     * @param {string|symbol} key key
      * @param {boolean} [refreshTimestamp=false]
      * @returns {T}
      *
@@ -271,7 +271,7 @@ class TimeMap extends events {
      * @function keys
      * @description Return all keys
      * @memberof TimeMap#
-     * @returns {IterableIterator<string|Symbol|number>}
+     * @returns {IterableIterator<string|symbol|number>}
      */
     keys() {
         return TimeStore.get(this).keys();
