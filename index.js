@@ -223,7 +223,6 @@ class TimeMap extends events {
     /**
      * @version 0.1.0
      *
-     * @template T
      * @function get
      * @description The get() method returns a specified element from the TimeMap object.
      * @memberof TimeMap#
