@@ -20,7 +20,6 @@ avaTest("construct new TimeMap", (assert) => {
     const map = new TimeMap();
     assert.is(map.timeLife, TimeMap.DEFAULT_TIMELIFE_MS);
     assert.is(Object.keys(map).length, 3);
-    assert.is(Reflect.ownKeys(map).length, 6);
 
     const mapCusto = new TimeMap(4000);
     assert.is(mapCusto.timeLife, 4000);
