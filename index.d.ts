@@ -1,8 +1,8 @@
 /// <reference types="@types/node" />
 
-import * as events from "events";
+import { EventEmitter } from "events";
 
-declare class TimeMap<T> extends events {
+declare class TimeMap<T> extends EventEmitter {
     constructor(timeLifeMs: number);
 
     public static DEFAULT_TIMELIFE_MS: number;
