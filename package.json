@@ -1,6 +1,6 @@
 {
     "name": "@slimio/timemap",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "Map implementation with timelife keys",
     "main": "index.js",
     "scripts": {
