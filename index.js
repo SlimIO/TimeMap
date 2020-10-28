@@ -68,6 +68,7 @@ function checkInterval(timeMap) {
                 timeMap.emit("expiration", key, elem.value);
                 timeMap.delete(key);
             }, timeMap.timeLife - deltaTime);
+            timeMap[SymInterval].unref();
             break;
         }
     }
@@ -167,6 +168,7 @@ class TimeMap extends events {
                 this.emit("expiration", key, value);
                 this.delete(key);
             }, this.timeLife);
+            this[SymInterval].unref();
         }
 
         curr.set(key, { ts, value });
