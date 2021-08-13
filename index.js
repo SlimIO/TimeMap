@@ -55,6 +55,7 @@ function checkInterval(timeMap) {
     while (sortedElements.length > 0) {
         const [key, elem] = sortedElements.pop();
         const deltaTime = Date.now() - elem.ts;
+        console.log(deltaTime);
 
         if (deltaTime >= timeMap.timeLife) {
             // When the key is already expired too
@@ -67,8 +68,8 @@ function checkInterval(timeMap) {
             timeMap[SymInterval] = setTimeout(() => {
                 timeMap.emit("expiration", key, elem.value);
                 timeMap.delete(key);
-            }, timeMap.timeLife - deltaTime);
-            timeMap[SymInterval].unref();
+            }, (timeMap.timeLife - deltaTime) + 200);
+            // timeMap[SymInterval].unref();
             break;
         }
     }
@@ -216,10 +217,23 @@ class TimeMap extends events {
      * @description Returns a boolean indicating whether an element with the specified key exists or not.
      * @memberof TimeMap#
      * @param {string|symbol} key key
+     * @param {boolean} [refreshTimestamp=false]
      * @returns {boolean}
      */
-    has(key) {
-        return TimeStore.get(this).has(key);
+    has(key, refreshTimestamp = false) {
+        const curr = TimeStore.get(this);
+
+        const hasKey = curr.has(key);
+        if (hasKey && refreshTimestamp) {
+            const currO = curr.get(key);
+            currO.ts = Date.now();
+
+            if (this[SymCurrKey] === key) {
+                checkInterval(this);
+            }
+        }
+
+        return hasKey;
     }
 
     /**
