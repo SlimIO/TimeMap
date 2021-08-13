@@ -220,8 +220,10 @@ class TimeMap extends events {
      * @returns {boolean}
      */
     has(key, refreshTimestamp = false) {
-        if (TimeStore.get(this).has(key) && refreshTimestamp) {
-            const curr = TimeStore.get(this);
+        const curr = TimeStore.get(this);
+        const hasKey = curr.has(key);
+
+        if (hasKey && refreshTimestamp) {
             const curr0 = curr.get(key);
             curr0.ts = Date.now();
 
@@ -230,7 +232,7 @@ class TimeMap extends events {
             }
         }
 
-        return TimeStore.get(this).has(key);
+        return hasKey;
     }
 
     /**
