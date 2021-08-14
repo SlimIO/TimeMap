@@ -108,6 +108,12 @@ class TimeMap extends events {
         TimeStore.set(this, new Map());
 
         process.on("exit", () => {
+            const curr = TimeStore.get(this);
+
+            for (const [key, elem] of curr.entries()) {
+                this.emit("expiration", key, elem.value);
+            }
+
             this.clear();
         });
 
