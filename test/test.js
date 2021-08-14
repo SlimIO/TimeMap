@@ -48,8 +48,27 @@ avaTest("set key in TimeMap", async(assert) => {
     assert.false(map.has(symFoo));
 });
 
-avaTest("get key in TimeMap", async(assert) => {
+avaTest("has key in TimeMap", async(assert) => {
     assert.plan(4);
+    const map = new TimeMap(100);
+    map.on("expiration", () => {
+        assert.pass();
+    });
+
+    map.set("foo", "bar");
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    assert.true(map.has("foo", true));
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    assert.true(map.has("foo", true));
+
+    await new Promise((resolve) => setTimeout(resolve, 110));
+    assert.false(map.has("foo"));
+});
+
+avaTest("get key in TimeMap", async(assert) => {
+    assert.plan(5);
     const map = new TimeMap(100);
     map.on("expiration", () => {
         assert.pass();
@@ -60,8 +79,13 @@ avaTest("get key in TimeMap", async(assert) => {
         map.set("woo", "moo");
     }, 50);
 
-    const ret = map.get("foo");
+    const ret = map.get("foo", true);
     assert.is(ret, "bar");
+
+    await new Promise((resolve) => setTimeout(resolve, 60));
+
+    const ret2 = map.get("foo");
+    assert.is(ret2, "bar");
 
     assert.throws(() => {
         map.get("world!");
