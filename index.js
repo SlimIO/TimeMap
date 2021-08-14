@@ -43,6 +43,7 @@ function assertKey(key) {
  */
 function checkInterval(timeMap) {
     const curr = TimeStore.get(timeMap);
+    clearTimeout(timeMap[SymInterval]);
     timeMap[SymInterval] = null;
     timeMap[SymCurrKey] = null;
 
@@ -216,10 +217,23 @@ class TimeMap extends events {
      * @description Returns a boolean indicating whether an element with the specified key exists or not.
      * @memberof TimeMap#
      * @param {string|symbol} key key
+     * @param {boolean} [refreshTimestamp=false]
      * @returns {boolean}
      */
-    has(key) {
-        return TimeStore.get(this).has(key);
+    has(key, refreshTimestamp = false) {
+        const curr = TimeStore.get(this);
+        const hasKey = curr.has(key);
+
+        if (hasKey && refreshTimestamp) {
+            const curr0 = curr.get(key);
+            curr0.ts = Date.now();
+
+            if (this[SymCurrKey] === key) {
+                checkInterval(this);
+            }
+        }
+
+        return hasKey;
     }
 
     /**

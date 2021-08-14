@@ -38,8 +38,12 @@ strictEqual(col.has("foo"), true);
 
 setTimeout(() => {
     col.set("hello", "world!");
-    strictEqual(col.has("foo"), true);
+    strictEqual(col.has("foo", true), true);
 }, 500);
+
+setTimeout(() => {
+    strictEqual(col.has("foo"), true);
+}, 500)
 
 setTimeout(() => {
     strictEqual(col.has("foo"), false);
@@ -102,7 +106,7 @@ strictEqual(map.get(sym), "foo");
 ```
 </details>
 
-<details><summary>has(key: TimeMap.key): boolean</summary>
+<details><summary>has(key: TimeMap.key, refreshTimestamp?: boolean): boolean</summary>
 <br />
 
 Similar to `Map.has` method. Return **true** if the key exist within.
@@ -111,11 +115,17 @@ const { strictEqual } = require("assert");
 
 const map = new TimeMap(100);
 map.set("foo", "bar");
-strictEqual(map.has("foo"), true);
+setTimeout(() => {
+    strictEqual(map.has("foo", true), true);
+}, 50);
+
+setTimeout(() => {
+    strictEqual(map.has("foo"), true);
+}, 50);
 
 setTimeout(() => {
     strictEqual(map.has("foo"), false);
-}, 105);
+}, 50);
 ```
 </details>
 
