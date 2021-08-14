@@ -217,6 +217,7 @@ class TimeMap extends events {
      * @description Returns a boolean indicating whether an element with the specified key exists or not.
      * @memberof TimeMap#
      * @param {string|symbol} key key
+     * @param {boolean} [refreshTimestamp=false]
      * @returns {boolean}
      */
     has(key, refreshTimestamp = false) {
