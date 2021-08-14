@@ -107,6 +107,16 @@ class TimeMap extends events {
 
         TimeStore.set(this, new Map());
 
+        process.on("exit", () => {
+            const curr = TimeStore.get(this);
+
+            for (const [key, elem] of curr.entries()) {
+                this.emit("expiration", key, elem.value);
+            }
+
+            this.clear();
+        });
+
         // These properties are private, that why we use Symbols as key
         // they can still be recovered with Reflect.ownKeys()
         Reflect.defineProperty(this, SymInterval, {
