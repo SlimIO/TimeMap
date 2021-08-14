@@ -107,6 +107,10 @@ class TimeMap extends events {
 
         TimeStore.set(this, new Map());
 
+        process.on("exit", () => {
+            this.clear();
+        });
+
         // These properties are private, that why we use Symbols as key
         // they can still be recovered with Reflect.ownKeys()
         Reflect.defineProperty(this, SymInterval, {
